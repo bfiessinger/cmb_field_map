@@ -42,7 +42,13 @@ class PW_CMB2_Field_Google_Maps {
 
 		$this->setup_admin_scripts( $api_key );
 
-		echo '<input type="text" class="large-text pw-map-search" id="' . $field->args( 'id' ) . '" />';
+		echo $field_type_object->input( array(
+			'type'  => 'text',
+			'name'  => $field->args( '_name' ) . '[address]',
+			'value' => isset( $field_escaped_value['address'] ) ? $field_escaped_value['address'] : '',
+			'class' => 'large-text pw-map-search',
+			'desc'  => '',
+		) );
 
 		echo '<div class="pw-map"></div>';
 
@@ -68,7 +74,13 @@ class PW_CMB2_Field_Google_Maps {
 	 * Optionally save the latitude/longitude values into two custom fields.
 	 */
 	public function sanitize_pw_map( $override_value, $value, $object_id, $field_args ) {
+
 		if ( isset( $field_args['split_values'] ) && $field_args['split_values'] ) {
+
+			if ( ! empty( $value['address'] ) ) {
+				update_post_meta( $object_id, $field_args['id'] . '_address', $value['address'] );
+			}
+
 			if ( ! empty( $value['latitude'] ) ) {
 				update_post_meta( $object_id, $field_args['id'] . '_latitude', $value['latitude'] );
 			}
