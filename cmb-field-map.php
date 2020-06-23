@@ -121,6 +121,10 @@ class PW_CMB2_Field_Google_Maps {
 			update_post_meta( $object_id, $field_args['id'] . '_locality', $value['locality'] );
 		}
 
+		if ( ! empty( $value['postal_code'] ) ) {
+			update_post_meta( $object_id, $field_args['id'] . '_postal_code', $value['postal_code'] );
+		}
+
 		if ( isset( $field_args['split_values'] ) && $field_args['split_values'] ) {
 			if ( ! empty( $value['latitude'] ) ) {
 				update_post_meta( $object_id, $field_args['id'] . '_latitude', $value['latitude'] );
