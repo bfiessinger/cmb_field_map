@@ -61,6 +61,7 @@ class PW_CMB2_Field_Google_Maps {
 			'class'      => 'pw-map-latitude',
 			'desc'       => '',
 		) );
+		
 		echo $field_type_object->input( array(
 			'type'       => 'hidden',
 			'name'       => $field->args('_name') . '[longitude]',
@@ -68,6 +69,35 @@ class PW_CMB2_Field_Google_Maps {
 			'class'      => 'pw-map-longitude',
 			'desc'       => '',
 		) );
+
+		echo $field_type_object->input( array(
+			'type'			=> 'hidden',
+			'name'       => $field->args('_name') . '[street]',
+			'value'      => isset( $field_escaped_value['street'] ) ? $field_escaped_value['street'] : '',
+			'class'      => 'pw-map-street',
+		) );
+
+		echo $field_type_object->input( array(
+			'type'			=> 'hidden',
+			'name'       => $field->args('_name') . '[street_number]',
+			'value'      => isset( $field_escaped_value['street_number'] ) ? $field_escaped_value['street_number'] : '',
+			'class'      => 'pw-map-street_number',
+		) );
+
+		echo $field_type_object->input( array(
+			'type'			=> 'hidden',
+			'name'       => $field->args('_name') . '[locality]',
+			'value'      => isset( $field_escaped_value['locality'] ) ? $field_escaped_value['locality'] : '',
+			'class'      => 'pw-map-locality',
+		) );
+
+		echo $field_type_object->input( array(
+			'type'			=> 'hidden',
+			'name'       => $field->args('_name') . '[postal_code]',
+			'value'      => isset( $field_escaped_value['postal_code'] ) ? $field_escaped_value['postal_code'] : '',
+			'class'      => 'pw-map-postal_code',
+		) );
+
 	}
 
 	/**
@@ -75,12 +105,23 @@ class PW_CMB2_Field_Google_Maps {
 	 */
 	public function sanitize_pw_map( $override_value, $value, $object_id, $field_args ) {
 
+		if ( ! empty( $value['address'] ) ) {
+			update_post_meta( $object_id, $field_args['id'] . '_address', $value['address'] );
+		}
+
+		if ( ! empty( $value['street'] ) ) {
+			update_post_meta( $object_id, $field_args['id'] . '_street', $value['street'] );
+		}
+
+		if ( ! empty( $value['street_number'] ) ) {
+			update_post_meta( $object_id, $field_args['id'] . '_street_number', $value['street_number'] );
+		}
+
+		if ( ! empty( $value['locality'] ) ) {
+			update_post_meta( $object_id, $field_args['id'] . '_locality', $value['locality'] );
+		}
+
 		if ( isset( $field_args['split_values'] ) && $field_args['split_values'] ) {
-
-			if ( ! empty( $value['address'] ) ) {
-				update_post_meta( $object_id, $field_args['id'] . '_address', $value['address'] );
-			}
-
 			if ( ! empty( $value['latitude'] ) ) {
 				update_post_meta( $object_id, $field_args['id'] . '_latitude', $value['latitude'] );
 			}
