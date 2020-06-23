@@ -17,7 +17,7 @@
 		var address_street = mapInstance.find('.pw-map-street');
 		var address_street_number = mapInstance.find('.pw-map-street_number');
 		var address_locality = mapInstance.find('.pw-map-locality');
-		var address_postal_code = mapCanvas.find('.pw-map-postal_code');
+		var address_postal_code = mapInstance.find('.pw-map-postal_code');
 
 		var zoom = 5;
 
